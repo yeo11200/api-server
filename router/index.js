@@ -1,3 +1,4 @@
 module.exports = (app) => {
-    console.log(app);
+
+    console.log(process.env.PROJECT);
 }
