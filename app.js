@@ -4,6 +4,10 @@ const env = require('dotenv');
 const path = require('path');
 const router = require('./router/index');
 
+const models = require('./models/index').sequelize;
+
+models.sync();
+
 env.config({
     path: path.resolve(
       process.cwd(),

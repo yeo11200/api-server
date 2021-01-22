@@ -1,5 +1,5 @@
 'use strict';
-
+// sequelize 공식문서 : https://sequelize.org/v5/manual/data-types.html
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
@@ -36,5 +36,7 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+db.User = require('./user')(sequelize, Sequelize);
 
 module.exports = db;
