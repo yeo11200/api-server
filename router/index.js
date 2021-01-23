@@ -1,4 +1,5 @@
-module.exports = (app) => {
+const member = require('./member');
 
-    console.log(process.env.PROJECT);
+module.exports = (app) => {
+    app.use('/member', member);
 }

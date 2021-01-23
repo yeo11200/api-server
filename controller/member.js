@@ -18,11 +18,33 @@ const login = async (req, res, next) => {
         result.msg = e;
     }
 
-    return res.state(200).json(result);
+    return res.status(200).json(result);
 }
 
 const registar = async (req, res, next) => {
 
+    let result = {};
+
+    const body = req.body;
+
+    
+
+    let data = {
+        'email' : body.id,
+        'pw' : body.pw,
+        'nickname' : body.nickname,
+        'type' : (body.type === undefined) ? 'local' : body.type,
+        'd_fine' : (body.type === undefined) ? 15 : body.type
+    }
+
+    try{
+        result = await service.registrer(data);
+    }catch(e){
+        result.status = 500;
+        result.msg = e;
+    }
+
+    return res.status(200).json(result);
 }
 
 module.exports = {

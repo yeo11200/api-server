@@ -6,7 +6,7 @@ module.exports = (sequelize, DataType) => {
             autoIncrement: true,
             comment: '회원 고유번호'
         },
-        id : {
+        email : {
             type: DataType.STRING(50),
             allowNull: false,
             comment: '회원 ID'
@@ -36,6 +36,10 @@ module.exports = (sequelize, DataType) => {
             type: DataType.STRING(255),
             allowNull: false,
             comment: '각 회원별 salt Value'
+        },
+        deleteAt : {
+            type: DataType.DATE,
+            allowNull: true
         }
     }, 
     {
@@ -48,11 +52,11 @@ module.exports = (sequelize, DataType) => {
            beforeCreate: function (person, options, fn) {
                person.createdAt = new Date();
                person.updatedAt = new Date();
-               fn(null, person);
+               sequelize.fn(null, person);
            },
            beforeUpdate: function (person, options, fn) {
                person.updatedAt = new Date();
-               fn(null, person);
+               sequelize.fn(null, person);
            }
        }
     });

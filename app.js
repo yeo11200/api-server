@@ -22,6 +22,10 @@ env.config({
  */
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
+
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
+
 /**
  * cookie 데이터 활성화
  */

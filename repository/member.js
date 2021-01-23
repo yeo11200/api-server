@@ -1,41 +1,59 @@
 const models = require('../models/index');
-const sequelize = require('sequelize');
-
 const User = models.User;
-const Op = sequelize.Op
+const Op = models.Sequelize.Op;
 
 const login = async (data) => {
 
-    const result = null;
+    let result = null;
 
     try{
 
-        await User.findAll({ 
-            attributes : ['id', ['pw', 'pass'], 'salt', 'type', 'nickname', 'created_at'],
+        let info = await User.findAll({ 
+            attributes : ['email', ['pw', 'pass'], 'salt', 'type', 'nickname'],
             where : {
-                id : {
-                    [Op.ed] : data
-                },
-                deleted_at : {
-                    [Op.ne] : null
+                'email' : data,
+                'deleted_at' : {
+                    [Op.eq]: null
                 }
             }
-    }).then(res => {
-            console.log(res);
-            result = res;
-        }).catch(e => {
-            console.log(e);
-            result = null;
+        })
+
+        console.log(info);
+        if(info.length > 0){
+            result = info[0];
+        }else{
+            result = 0;
+        }
+    }catch(e){
+        result = 0;
+    }
+
+    console.log(result);
+
+    return result;
+}
+
+const registor = async (data) => {
+
+    let result = 0;
+
+    try{
+
+        let user = await models.sequelize.transaction(async (t) => {
+            //  { fields: [ 'creator_id'] } : 해당하는 컬럼의 last insert id 리턴
+            return await User.create(data, { transaction: t })
         });
 
+        result = user.dataValues.idx;
+
     }catch(e){
-        result = null;
+        result = -1;
     }
 
     return result;
 }
 
-
 module.exports = {
     'login' : login,
+    'registor' : registor
 }

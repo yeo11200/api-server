@@ -21,8 +21,6 @@ const createToken = async (id, name) => {
         }
     )
 
-    console.log(token);
-
     return token
 }
 
@@ -31,15 +29,21 @@ const verifyToken = async (req, res, next) => {
 
     const body = req.body;
 
+    console.log('test');
     try{
 
-        const decoded = await jwt.verify(body.token, SECRET);
+        if(body.token !== undefined){
+            const decoded = await jwt.verify(body.token, SECRET);
 
-        if(decoded){
-            next();
+            if(decoded){
+                next();
+            }else{
+                return res.status(401).json({ error: 'unauthorized' });
+            }
         }else{
-            return res.status(401).json({ error: 'unauthorized' });
+            next();
         }
+        
     }catch(e){
         return res.status(401).json({ error: 'token expired' });
     }
