@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataType) => {
     return sequelize.define('Quiz', {
         idx: {
-            type: DataType.INTERGER,
+            type: DataType.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             comment: '퀴즈 고유ID'
@@ -26,6 +26,11 @@ module.exports = (sequelize, DataType) => {
             allowNull: false,
             defaultValue : 'chioce',
             comment: '질문 상태 : short(주관식), chioce(객관식)'
+        },
+        step : {
+            type: DataType.INTEGER,
+            allowNull: false,
+            comment: '퀴즈 스텝'
         }
     }, {
         tableName : 'quiz',

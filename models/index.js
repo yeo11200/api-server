@@ -38,5 +38,6 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.User = require('./user')(sequelize, Sequelize);
-
+db.Quiz = require('./quiz')(sequelize, Sequelize);
+db.QuizLog = require('./quiz.log')(sequelize, Sequelize);
 module.exports = db;

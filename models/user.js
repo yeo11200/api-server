@@ -31,12 +31,29 @@ module.exports = (sequelize, DataType) => {
             allowNull: false,
             defaultValue : '15',
             comment: 'SNS 회원가입 여부'
+        },
+        salt : {
+            type: DataType.STRING(255),
+            allowNull: false,
+            comment: '각 회원별 salt Value'
         }
-    },{
-        tableName: 'member',
-        freezeTableName: true,
-        underscored: true,
+    }, 
+    {
+        tableName : 'member',
+        underscored : true,
         timestamps: true,
-        paranoid: true
+        paranoid: true,
+        freezeTableName : true,
+        hooks: {
+           beforeCreate: function (person, options, fn) {
+               person.createdAt = new Date();
+               person.updatedAt = new Date();
+               fn(null, person);
+           },
+           beforeUpdate: function (person, options, fn) {
+               person.updatedAt = new Date();
+               fn(null, person);
+           }
+       }
     });
 }
