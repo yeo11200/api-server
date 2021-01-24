@@ -21,8 +21,7 @@ const login = async (data) => {
         }else{
             
             const confirmPass = await crypto.pbkdf2Sync(data.pw, info.salt, 100000, 64, 'sha512').toString('base64');
-
-            const loginYn = await (confirmPass === info.pw) ? true : false;
+            const loginYn = await (confirmPass === info.pass) ? true : false;
 
             if(loginYn === false){
                 result.status = 900;
@@ -34,8 +33,9 @@ const login = async (data) => {
                 result.msg = '로그인 성공';
                 // key값을 delete 해당 해당 리턴을 방지
                 delete info.pass;
+                delete info.salt;
                 result.data.info = info;
-                result.data.token = jwt.createToken(info.id, info.nickname);
+                result.data.info.token = await jwt.createToken(info.id, info.nickname);
             }
         }
     }catch(e){

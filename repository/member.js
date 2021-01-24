@@ -20,7 +20,7 @@ const login = async (data) => {
 
         console.log(info);
         if(info.length > 0){
-            result = info[0];
+            result = info[0].dataValues;
         }else{
             result = 0;
         }
