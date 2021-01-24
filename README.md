@@ -30,3 +30,37 @@ npm install --save sequelize // sequelize 설정
 npm install --save mysql2 // mysql2를 설치 해준다.
 npm install -g sequelize-cli // sequelize 간단하게 실행 
 ```
+```js
+// 등록
+create({}, {options})
+
+/**
+ * select 
+ * findAll : 데이터를 전제적으로 출력을 하는 방법
+ * count : 데이터의 총 합만 출력하는 방법
+ * attributes : 원하는 colum만 리턴을 해준다.
+ */
+findAll({attributes, where, offset, limit})
+count({attributes, where});
+// 수정
+update({}, {where})
+
+// 삭제
+destroy({where});
+
+// sequelize 에서 트랜지션을 사용하기 위한 함수
+// 트랜지션을 사용하려면 트랜지션안에 사용을 해주고 옵션에 transaction : callback을 적어준다.
+sequelize.transaction(callback)
+
+```
+
+
+### mysql, mariaDB pagination
+```sql
+SELECT * FROM table LIMIT start, end
+```
+```js
+
+// end page만큼은 1페이지에 추가되었기 떄문에 현재 페이지에서 -1를 해야한다.
+start = currientPage == 1 ? 0 : currientPage-1 * end 
+```
