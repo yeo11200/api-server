@@ -31,8 +31,12 @@ npm install --save mysql2 // mysql2를 설치 해준다.
 npm install -g sequelize-cli // sequelize 간단하게 실행 
 ```
 ```js
-// 등록
+/**
+ * create : 단일 행 insert,
+ * bulkCreate : 다중 행 insert
+ */
 create({}, {options})
+bulkCreate({}, {})
 
 /**
  * select 
@@ -43,13 +47,14 @@ create({}, {options})
 findAll({attributes, where, offset, limit})
 count({attributes, where});
 // 수정
-update({}, {where})
+update({query}, {where})
 
 // 삭제
 destroy({where});
 
 // sequelize 에서 트랜지션을 사용하기 위한 함수
 // 트랜지션을 사용하려면 트랜지션안에 사용을 해주고 옵션에 transaction : callback을 적어준다.
+// option에 transaction를 적어줘야한다.
 sequelize.transaction(callback)
 
 ```
@@ -63,4 +68,35 @@ SELECT * FROM table LIMIT start, end
 
 // end page만큼은 1페이지에 추가되었기 떄문에 현재 페이지에서 -1를 해야한다.
 start = currientPage == 1 ? 0 : currientPage-1 * end 
+```
+
+
+### moment
+- 날짜를 가지고 오는 라이브럴
+  - format 등 다양하게 활용이 가능하다
+  - npm install moment-timezone을 사용할 경우 date 타입 세팅을 국가 별 나라별로 할 수 있다.
+  - 공식 사이트 : https://momentjs.com/timezone/
+```npm
+npm install moment
+npm install moment-timezone
+```
+```js
+const moment = require('moment-timezone');
+const serverTime = moment.tz('Asia/Seoul').format('YYYY-MM-DD HH:DD:ss');
+```
+
+### mysql 
+- DBMS의 종류 중 하나
+  - index란 데이터를 정렬해주고, 검색 속도를 향상 시켜준다. 
+  - 복합 index란 여러가지의 키를 합쳐서 검색 속도를 향상 시켜주는 index
+    - 복합 index를 작업할 때는 중복도가 낮은 순 -> 높은 순으로 index를 걸어줘야한다.
+  - index는 물리저장소인 page에 저장이되고, index가 많은 만큼 속도가 느려질 수 있다.
+  ```sql
+    SELECT * FROM table USE INDEX(index name) WHERE 조건
+  ```
+- 날짜 세팅
+```sql
+SET GLOBAL time_zone='Asia/Seoul'
+
+SET time_zone='Asia/Seoul'
 ```

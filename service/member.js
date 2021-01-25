@@ -29,6 +29,10 @@ const login = async (data) => {
                 result.data.err_code = 102;
                 result.data.err_msg = '회원의 아이디와 비밀번호를 확인해주세요.';
             }else{
+
+                // 마지막 로그인 데이터를 추가 해준다.
+                await member.lastLoginDate(info.idx);
+
                 result.status = 200;
                 result.msg = '로그인 성공';
                 // key값을 delete 해당 해당 리턴을 방지

@@ -38,6 +38,7 @@ module.exports = (sequelize, DataType) => {
             comment: '각 회원별 salt Value'
         },
         deleteAt : {
+            // 'TIMESTAMP' : timestamp의 type
             type: DataType.DATE,
             allowNull: true
         },
@@ -49,6 +50,8 @@ module.exports = (sequelize, DataType) => {
     }, 
     {
         tableName : 'member',
+        // data를 업데이트 할 때 대문자로 적어줘야 update가 가능하다.
+        // lastLoginAt === last_login_at
         underscored : true,
         timestamps: true,
         paranoid: true,
@@ -57,7 +60,6 @@ module.exports = (sequelize, DataType) => {
            beforeCreate: function (person, options, fn) {
                person.createdAt = new Date();
                person.updatedAt = new Date();
-               person.lastLoginAt = new Date();
                sequelize.fn(null, person);
            },
            beforeUpdate: function (person, options, fn) {

@@ -36,13 +36,16 @@ const lastLoginDate = async (data) => {
 
     try{
 
-        let update = await User.update(
-            {'last_login_at' : serverTime.serverTime}, 
-            {
-                where : {
-                    idx : data
-                }, 
-            });
+        let update = await models.sequelize.transaction(async (tran) => {
+            return await User.update(
+                {'lastLoginAt' : serverTime.serverTime}, 
+                {
+                    where : {
+                        idx : data
+                    },
+                    transaction: tran
+                });
+        })
 
         result = update[0];
 
