@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 
 const models = require('./models/index').sequelize;
 
+
 models.sync();
 
 env.config({
@@ -20,11 +21,11 @@ env.config({
 /**
  * express에서 데이터를 받기위한 middleware 추가
  */
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
-app.use(express.urlencoded({extended: true}))
-app.use(express.json())
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 /**
  * cookie 데이터 활성화

@@ -40,6 +40,11 @@ module.exports = (sequelize, DataType) => {
         deleteAt : {
             type: DataType.DATE,
             allowNull: true
+        },
+        lastLoginAt : {
+            type: DataType.DATE,
+            allowNull: false,
+            comment: '마지막 로그인 날짜'
         }
     }, 
     {
@@ -52,6 +57,7 @@ module.exports = (sequelize, DataType) => {
            beforeCreate: function (person, options, fn) {
                person.createdAt = new Date();
                person.updatedAt = new Date();
+               person.lastLoginAt = new Date();
                sequelize.fn(null, person);
            },
            beforeUpdate: function (person, options, fn) {

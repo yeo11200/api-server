@@ -1,6 +1,7 @@
 const models = require('../models/index');
 const User = models.User;
 const Op = models.Sequelize.Op;
+const serverTime = require('../util/date');
 
 const login = async (data) => {
 
@@ -17,8 +18,6 @@ const login = async (data) => {
                 }
             }
         })
-
-        console.log(info);
         if(info.length > 0){
             result = info[0].dataValues;
         }else{
@@ -28,7 +27,29 @@ const login = async (data) => {
         result = 0;
     }
 
-    console.log(result);
+    return result;
+}
+
+const lastLoginDate = async (data) => {
+
+    let result = 0;
+
+    try{
+
+        let update = await User.update(
+            {'last_login_at' : serverTime.serverTime}, 
+            {
+                where : {
+                    idx : data
+                }, 
+            });
+
+        result = update[0];
+
+    }catch(e){
+        console.log(e);
+        result = -1;  
+    }
 
     return result;
 }
@@ -55,5 +76,6 @@ const registor = async (data) => {
 
 module.exports = {
     'login' : login,
-    'registor' : registor
+    'registor' : registor,
+    'lastLoginDate' : lastLoginDate
 }
