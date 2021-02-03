@@ -21,7 +21,7 @@ env.config({
 /**
  * express에서 데이터를 받기위한 middleware 추가
  */
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use(express.urlencoded({extended: true}));

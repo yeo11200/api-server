@@ -27,12 +27,16 @@ const listQuiz = async (data) => {
 
     try{
 
+        const overlay = [];
+
         // count 함수를 사용하는 방법
-        let count = await Quiz.count({where : {
-            step : data.step,
-            deleted_at : null,
-            show_yn : 'Y'
-        },});
+        let count = await Quiz.count({
+            where : {
+                step : data.step,
+                deleted_at : null,
+                show_yn : 'Y'
+            },
+        });
         
         // sequelize 방법을 사용하는 방법
         // let count2 = await Quiz.findAll({
@@ -57,6 +61,31 @@ const listQuiz = async (data) => {
                 // limit : data.limit
             })
 
+            const listArray = [];
+
+            if(list.length > 20){
+                while(true){
+
+                    const random = Math.floor(Math.random() * list.length);
+
+                    if(overlay.includes(random) === false){
+                        overlay.push(random);
+
+                        if(listArray.length >= 20){
+                            break;
+                        }else{
+                            listArray.push(list[random]);
+                        }
+                    }
+                }
+                
+                list = listArray;
+            }
+
+            await list.map((value, index) => {
+                list[index].lists = value.lists.split(',');
+            })
+
             result.list = list;
         }
         
@@ -72,24 +101,31 @@ const listQuiz = async (data) => {
 }
 
 const findAnswer = async (data) => {
+
+    const result = {};
+
+    console.log('DB', data);
     try{
 
-        let find = await Quiz.findOne({
+        let find = await Quiz.count({
             where : {
-                step : {
-                    [Op.eq] : data.step
+                idx : {
+                    [Op.eq] : data.idx
+                },
+                anwsers : {
+                    [Op.eq] : data.answers
                 }
             }
         })
-        
-        console.log(find);
+        result.cnt = find;
     }catch(e){
-
+        result.cnt = 0;
     }
+    return result;
 }
 
-findAnswer({step : 3});
 
 module.exports = {
-    'listQuiz' : listQuiz
+    'listQuiz' : listQuiz,
+    'findAnswer' : findAnswer
 }
