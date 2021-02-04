@@ -42,6 +42,7 @@ const quizList = async (req, res, next) => {
         'end' : 20
     }
 
+
     try{
         const test = await service.quizList(data);
 
@@ -55,7 +56,26 @@ const quizList = async (req, res, next) => {
     return res.status(200).json(result);
 }
 
+const stepList = async (req, res, next) => {
+
+    const result = {};
+    
+    try{
+
+        const data = await service.stepList();
+
+        Object.assign(result, data);
+    }catch(e){
+
+        console.log(e);
+        result.msg = e;
+        result.status = 500;
+    }
+
+    return res.status(200).json(result);
+}
 module.exports = {
     'findAnswer' : findAnswer,
-    'quizList' : quizList
+    'quizList' : quizList,
+    'stepList' : stepList
 }

@@ -5,6 +5,7 @@ const path = require('path');
 const router = require('./router/index');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const models = require('./models/index').sequelize;
 
@@ -26,7 +27,7 @@ app.use(bodyParser.json());
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-
+app.use(cors());
 /**
  * cookie 데이터 활성화
  */

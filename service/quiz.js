@@ -1,4 +1,5 @@
 const repostory = require('../repository/quiz');
+const step = require('../repository/quiz.step');
 
 
 const findAnswer = async (data) => {
@@ -48,7 +49,7 @@ const quizList = async (data) => {
     try{
 
         const list = await repostory.listQuiz(data);
-        
+
         let datas = {};
 
         datas.data = list;
@@ -65,8 +66,34 @@ const quizList = async (data) => {
 
     return result;
 }
+
+const stepList = async () => {
+
+    const result = {};
+
+    try{
+        const repo = await step.stepList();
+
+        if(repo.data?.cnt !== undefined){
+            result.msg = '조회성공';
+            result.status = 200;
+
+            Object.assign(result, repo);
+        }else{
+            result.msg = '조회실패';
+            result.status = 900;
+        }
+    }catch(e){
+        console.log(e);
+        result.msg = e;
+        result.status = 500;
+    }
+
+    return result;
+}
 module.exports = {
     'findAnswer' : findAnswer,
-    'quizList' : quizList
+    'quizList' : quizList,
+    'stepList' : stepList
 }
 
