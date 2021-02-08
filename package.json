@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "set NODE_ENV=dev node ./app",
-    "pm2-run": "pm2 start ecosystem.config.js env-production"
+    "pm2-run": "pm2 start ecosystem.config.js --name env_production"
   },
   "author": "",
   "license": "ISC",
