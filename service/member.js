@@ -60,7 +60,6 @@ const registrer = async (data) => {
 
         result.data = {};
 
-        console.log('test');
         if(info === 0){
             data.salt = await crypto.randomBytes(255).toString('base64');
             data.pw = await crypto.pbkdf2Sync(data.pw, data.salt, 100000, 64, 'sha512').toString('base64');
