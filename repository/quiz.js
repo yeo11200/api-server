@@ -124,8 +124,33 @@ const findAnswer = async (data) => {
     return result;
 }
 
+const hintFinder = async (data) => {
+
+    const result = {};
+
+    try{
+        let find = await Quiz.findOne({
+            attributes : ['lists', 'anwsers'],
+            where : {
+                idx: {
+                    [Op.eq] : data.idx
+                },
+            }
+        })
+
+        find.lists = await find.lists.split(',');
+
+        Object.assign(result, {data : find});
+    }catch(e){
+        console.log(e);
+        Object.assign(result, { errCode : 105, errMsg : e})
+    }
+
+    return result;
+}
 
 module.exports = {
     'listQuiz' : listQuiz,
-    'findAnswer' : findAnswer
+    'findAnswer' : findAnswer,
+    'hintFinder' : hintFinder
 }

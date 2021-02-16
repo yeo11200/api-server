@@ -74,8 +74,52 @@ const stepList = async (req, res, next) => {
 
     return res.status(200).json(result);
 }
+
+const hintFinder = async (req, res, next) => {
+    const result = {};
+    
+    const params = req.params;
+
+    const query = req.query;
+
+    try{
+
+        const data = {
+            'idx' : params.idx
+        }
+
+        const servi = await service.hintFinder(data);
+
+        const random = Math.round(Math.random() * (servi.data.lists.length - servi.data.asleng));
+
+        if(query.hint !== undefined){
+            servi.data.lists = servi.data.lists.filter((value) => {
+                return query.hint.indexOf(value) == -1;
+            })
+            
+            const random = Math.round(Math.random() * (servi.data.lists.length - servi.data.asleng));
+
+            servi.data.lists = servi.data.lists[random];
+
+        }else{
+            servi.data.lists = servi.data.lists[random];
+        }
+
+        result.msg = '성공';
+        result.status = 200;
+
+        Object.assign(result, servi);
+
+    }catch(e){
+        result.msg = e;
+        result.status = 500;
+    }
+
+    return res.status(200).json(result);
+}
 module.exports = {
     'findAnswer' : findAnswer,
     'quizList' : quizList,
-    'stepList' : stepList
+    'stepList' : stepList,
+    'hintFinder' : hintFinder
 }

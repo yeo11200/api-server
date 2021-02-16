@@ -8,4 +8,6 @@ router.route('/:step').get(controller.quizList);
 
 router.route('/').get(controller.stepList);
 
+router.route('/hint/:idx').get(controller.hintFinder);
+
 module.exports = router;

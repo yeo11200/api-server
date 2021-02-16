@@ -1,7 +1,6 @@
 const repostory = require('../repository/quiz');
 const step = require('../repository/quiz.step');
 
-
 const findAnswer = async (data) => {
 
     const result = {};
@@ -91,9 +90,37 @@ const stepList = async () => {
 
     return result;
 }
+
+const hintFinder = async (data) => {
+
+    const result = {};
+
+    try{
+
+        const repo = await repostory.hintFinder(data);
+
+        repo.data.lists = repo.data.lists.filter((value, index) => {
+            return value !== repo.data.anwsers;
+        })
+
+        repo.data.asleng = repo.data.anwsers.length;
+        repo.data.anwsers = undefined;
+
+        Object.assign(result, repo);
+    }catch(e){
+
+        console.log(e);
+        
+        result.msg = e;
+        result.status = 500;
+    }
+
+    return result
+}
 module.exports = {
     'findAnswer' : findAnswer,
     'quizList' : quizList,
-    'stepList' : stepList
+    'stepList' : stepList,
+    'hintFinder' : hintFinder
 }
 
