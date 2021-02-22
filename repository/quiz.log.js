@@ -22,10 +22,38 @@ const quizLogCreate = async (data) => {
     }
 
     console.log(result);
-    
+
+    return result;
+}
+
+const quizLog = async (data) => {
+    let result = {};
+
+    try{
+        let log = await Quiz.findAll(
+        {
+            attributes : ['step'],
+            where : {
+                mId : data
+            },
+            group: ['step'],
+        });
+
+        const array = [];
+        log.filter((value) => {
+            array.push(value.step);
+        })
+        result = array;
+
+    }catch(e){
+        console.log(e);
+        result.errQuiz = e;
+    }
+
     return result;
 }
 
 module.exports = { 
-    'quizLogCreate' : quizLogCreate
+    'quizLogCreate' : quizLogCreate,
+    'quizLog' : quizLog
 }

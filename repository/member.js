@@ -2,6 +2,8 @@ const models = require('../models/index');
 const User = models.User;
 const Op = models.Sequelize.Op;
 const serverTime = require('../util/date');
+const quiz = require('./quiz.log');
+
 
 const login = async (data) => {
 
@@ -20,6 +22,7 @@ const login = async (data) => {
         })
         if(info.length > 0){
             result = info[0].dataValues;
+            result.quiz = await quiz.quizLog(result.idx);
         }else{
             result = 0;
         }
