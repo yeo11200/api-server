@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/anwser', controller.findAnswer);
 
-router.route('/:step').get(controller.quizList);
+router.route('/:step').get(controller.quizList).post(controller.quizLogCreate);
 
 router.route('/').get(controller.stepList);
 

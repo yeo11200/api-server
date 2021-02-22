@@ -117,9 +117,49 @@ const hintFinder = async (req, res, next) => {
 
     return res.status(200).json(result);
 }
+
+const quizLogCreate = async (req, res, next) => {
+
+    const result = {};
+
+    const body = req.body;
+
+    const params = req.params;
+
+    try{
+
+        const count = await service.quizList(params);
+
+        if(count.data.cnt === 0){
+            result.status = 900;
+            result.msg = '해당하는 데이터가 없습니다';
+        }else{
+
+            const data = await service.quizLogCreate(body, params.step);
+
+            if(data.data === true){
+                result.status = 200;
+                result.msg = '성공 입니다';
+            }else{
+                result.status = 900;
+                result.msg = '에러 입니다';
+            }
+    
+            Object.assign(result, data);
+        }
+
+    }catch(e){
+        result.status = 900;
+        result.msg = e;
+    }
+
+    return res.status(200).json(result);
+}
+
 module.exports = {
     'findAnswer' : findAnswer,
     'quizList' : quizList,
     'stepList' : stepList,
-    'hintFinder' : hintFinder
+    'hintFinder' : hintFinder,
+    'quizLogCreate' : quizLogCreate
 }

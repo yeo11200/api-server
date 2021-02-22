@@ -44,7 +44,7 @@ module.exports = (sequelize, DataType) => {
         },
         lastLoginAt : {
             type: DataType.DATE,
-            allowNull: false,
+            allowNull: true,
             comment: '마지막 로그인 날짜'
         }
     }, 

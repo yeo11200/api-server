@@ -66,6 +66,8 @@ const registrer = async (data) => {
     
             const memId = await member.registor(data);
     
+            console.log(memId);
+            
             if(memId > 0){
                 result.status = 200;
                 result.msg = '회원가입 성공';

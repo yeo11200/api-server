@@ -149,8 +149,24 @@ const hintFinder = async (data) => {
     return result;
 }
 
+const quizLogCreate = async (data) => {
+
+    let result = false;
+    try{
+        let quiz = await models.sequelize.transaction(async (tran) => {
+            return await Quiz.create(data, {transaction : tran});
+        })
+
+        console.log(quiz);
+    }catch(e){
+        result = false;
+    }
+
+    return result;
+}
 module.exports = {
     'listQuiz' : listQuiz,
     'findAnswer' : findAnswer,
-    'hintFinder' : hintFinder
+    'hintFinder' : hintFinder,
+    'quizLogCreate' : quizLogCreate
 }

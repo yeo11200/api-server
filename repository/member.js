@@ -10,7 +10,7 @@ const login = async (data) => {
     try{
 
         let info = await User.findAll({ 
-            attributes : ['email', ['pw', 'pass'], 'salt', 'type', 'nickname'],
+            attributes : ['email', ['pw', 'pass'], 'salt', 'type', 'nickname', ['hint_cnt', 'hintCnt'], 'idx'],
             where : {
                 'email' : data,
                 'deleted_at' : {
@@ -62,7 +62,7 @@ const registor = async (data) => {
     let result = 0;
 
     try{
-
+        
         let user = await models.sequelize.transaction(async (t) => {
             //  { fields: [ 'creator_id'] } : 해당하는 컬럼의 last insert id 리턴
             return await User.create(data, { transaction: t })

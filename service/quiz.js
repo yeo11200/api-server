@@ -1,6 +1,6 @@
 const repostory = require('../repository/quiz');
 const step = require('../repository/quiz.step');
-
+const stepLog = require ('../repository/quiz.log');
 const findAnswer = async (data) => {
 
     const result = {};
@@ -117,10 +117,31 @@ const hintFinder = async (data) => {
 
     return result
 }
+
+const quizLogCreate = async (data, idx) => {
+
+    const result = { data : {} };
+    try{
+
+        const value = {
+            ...data,
+            step : idx
+        };
+        const resultYn = await stepLog.quizLogCreate(value);
+        result.data = resultYn;
+
+    }catch(e){
+        Object.assign(result.data, { errCode : 201, errMsg : e });
+    }
+
+    return result;
+}
+
 module.exports = {
     'findAnswer' : findAnswer,
     'quizList' : quizList,
     'stepList' : stepList,
-    'hintFinder' : hintFinder
+    'hintFinder' : hintFinder,
+    'quizLogCreate' : quizLogCreate
 }
 
