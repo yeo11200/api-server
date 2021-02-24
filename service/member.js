@@ -30,16 +30,24 @@ const login = async (data) => {
                 result.data.err_msg = '회원의 아이디와 비밀번호를 확인해주세요.';
             }else{
 
-                // 마지막 로그인 데이터를 추가 해준다.
-                await member.lastLoginDate(info.idx);
+                if(info.loginAuthority === 'N'){
+                    // 마지막 로그인 데이터를 추가 해준다.
+                    await member.lastLoginDate(info.idx);
 
-                result.status = 200;
-                result.msg = '로그인 성공';
-                // key값을 delete 해당 해당 리턴을 방지
-                delete info.pass;
-                delete info.salt;
-                result.data.info = info;
-                result.data.info.token = await jwt.createToken(info.id, info.nickname);
+                    result.status = 200;
+                    result.msg = '로그인 성공';
+                    // key값을 delete 해당 해당 리턴을 방지
+                    delete info.pass;
+                    delete info.salt;
+                    result.data.info = info;
+                    result.data.info.token = await jwt.createToken(info.id, info.nickname);
+                }else{
+                    result.status = 900;
+                    result.msg = '오류';
+                    result.data.err_code = 203;
+                    result.data.err_msg = '회원아이디가 정지 되었습니다.';
+                }
+                
             }
         }
     }catch(e){
