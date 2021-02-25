@@ -80,8 +80,33 @@ const registor = async (data) => {
     return result;
 }
 
+const checkBoth = async (data) => {
+
+    let result = false;
+
+    try{
+
+        const cnt = await User.findOne({
+            attributes: [ [models.Sequelize.fn('count', 'idx'), 'cnt']],
+            where: {
+                [data.type] : data.value
+            }
+        })
+
+        console.log(cnt);
+
+        result = true;
+    }catch(e){
+        console.log(e);
+    }
+
+    return result;
+}
+
+
 module.exports = {
     'login' : login,
     'registor' : registor,
-    'lastLoginDate' : lastLoginDate
+    'lastLoginDate' : lastLoginDate,
+    'checkBoth' : checkBoth
 }

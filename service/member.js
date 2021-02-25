@@ -67,7 +67,7 @@ const registrer = async (data) => {
             const memId = await member.registor(data);
     
             console.log(memId);
-            
+
             if(memId > 0){
                 result.status = 200;
                 result.msg = '회원가입 성공';
@@ -92,7 +92,23 @@ const registrer = async (data) => {
     return result;
 }
 
+const checkBoth = async (data) => {
+
+    const result = { status : 500, data : {} };
+    try{
+
+        const cntType = await member.checkBoth(data);
+
+        Object.assign(result, {status : 200, data : { type : cntType }})
+    }catch(e){
+        Object.assign(result, { data : e})
+    }
+
+    return result;
+}
+
 module.exports = {
     'login' : login,
-    'registrer' : registrer
+    'registrer' : registrer,
+    'checkBoth' : checkBoth
 }
