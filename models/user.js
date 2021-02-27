@@ -9,6 +9,7 @@ module.exports = (sequelize, DataType) => {
         email : {
             type: DataType.STRING(50),
             allowNull: false,
+            unique: true,
             comment: '회원 ID'
         },
         pw : {
@@ -19,6 +20,7 @@ module.exports = (sequelize, DataType) => {
         nickname : {
             type: DataType.STRING(100),
             allowNull: false,
+            unique: true,
             comment: '회원 닉네임'
         },
         type : { 
@@ -46,6 +48,13 @@ module.exports = (sequelize, DataType) => {
             type: DataType.DATE,
             allowNull: true,
             comment: '마지막 로그인 날짜'
+        },
+        loginAuthority : {
+            type: DataType.ENUM({
+                values: ['Y', 'N']
+            }),
+            comment: '로그인 권한여부',
+            defaultValue: 'Y'
         }
     }, 
     {

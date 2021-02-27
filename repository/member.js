@@ -12,7 +12,7 @@ const login = async (data) => {
     try{
 
         let info = await User.findAll({ 
-            attributes : ['email', ['pw', 'pass'], 'salt', 'type', 'nickname', ['hint_cnt', 'hintCnt'], 'idx'],
+            attributes : ['email', ['pw', 'pass'], 'salt', 'type', 'nickname', ['hint_cnt', 'hintCnt'], 'idx', ['login_authority', 'loginAuthority'], 'autority'],
             where : {
                 'email' : data,
                 'deleted_at' : {
