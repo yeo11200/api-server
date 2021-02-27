@@ -54,7 +54,7 @@ module.exports = (sequelize, DataType) => {
                 values: ['Y', 'N']
             }),
             comment: '로그인 권한여부',
-            defaultValue: 'Y'
+            defaultValue: 'N'
         }
     }, 
     {

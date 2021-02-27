@@ -9,11 +9,15 @@ const login = async (data) => {
 
     try{
 
+        const cnt = await member.checkBoth({type : 'email', value : data.id});
+
+
         const info = await member.login(data.id);
 
         result.data = {};
 
-        if(info === null){
+
+        if(cnt === true){
             result.status = 900;
             result.msg = '오류';
             result.data.err_code = 101;
@@ -73,8 +77,6 @@ const registrer = async (data) => {
             data.pw = await crypto.pbkdf2Sync(data.pw, data.salt, 100000, 64, 'sha512').toString('base64');
     
             const memId = await member.registor(data);
-    
-            console.log(memId);
 
             if(memId > 0){
                 result.status = 200;
@@ -104,8 +106,9 @@ const checkBoth = async (data) => {
 
     const result = { status : 500, data : {} };
     try{
-
         const cntType = await member.checkBoth(data);
+
+        console.log(cntType);
 
         Object.assign(result, {status : 200, data : { type : cntType }})
     }catch(e){

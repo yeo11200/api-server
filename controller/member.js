@@ -47,7 +47,21 @@ const registar = async (req, res, next) => {
     return res.status(200).json(result);
 }
 
+const checkBoth = async (req, res, next) => {
+
+    const body = req.body;
+
+    const data = {
+        type : body.type,
+        value : body.value
+    }
+    const result = await service.checkBoth(data);
+
+    return res.status(200).json(result);
+}
+
 module.exports = {
     'login' : login,
-    'registar' : registar
+    'registar' : registar,
+    'checkBoth' : checkBoth
 }

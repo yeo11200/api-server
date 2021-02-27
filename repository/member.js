@@ -64,6 +64,8 @@ const registor = async (data) => {
 
     let result = 0;
 
+    console.log(data);
+    
     try{
         
         let user = await models.sequelize.transaction(async (t) => {
@@ -84,6 +86,8 @@ const checkBoth = async (data) => {
 
     let result = false;
 
+    console.log(data);
+
     try{
 
         const cnt = await User.findOne({
@@ -93,9 +97,10 @@ const checkBoth = async (data) => {
             }
         })
 
-        console.log(cnt);
-
-        result = true;
+        if(cnt.dataValues.cnt === 0){
+            result = true;
+        }
+        
     }catch(e){
         console.log(e);
     }
