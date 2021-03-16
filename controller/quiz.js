@@ -90,14 +90,14 @@ const hintFinder = async (req, res, next) => {
 
         const servi = await service.hintFinder(data);
 
-        const random = Math.round(Math.random() * (servi.data.lists.length - servi.data.asleng));
+        const random = Math.round(Math.random() * servi.data.lists.length);
 
         if(query.hint !== undefined){
             servi.data.lists = servi.data.lists.filter((value) => {
                 return query.hint.indexOf(value) == -1;
             })
-            
-            const random = Math.round(Math.random() * (servi.data.lists.length - servi.data.asleng));
+
+            const random = Math.round(Math.random() * servi.data.lists.length);
 
             servi.data.lists = servi.data.lists[random];
 
